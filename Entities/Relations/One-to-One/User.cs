@@ -15,7 +15,7 @@ namespace MCExercise.Entities.Relations.One_to_One
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
-        public string Bio { get; set; }
+        public string? Bio { get; set; }
         public string Type { get; set; }
         public Photo Photo { get; set; }
 
