@@ -1,4 +1,5 @@
-﻿using MCExercise.Models.Relations.One_to_One;
+﻿using MCExercise.Models.Relations.One_to_Many;
+using MCExercise.Models.Relations.One_to_One;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,6 +16,22 @@ namespace MCExercise.Utilities.JWTUtils
         {
             _appSettings = appSettings.Value;
         }
+
+        public string GenerateJWTToken(University university)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var appPrivateKey = Encoding.UTF8.GetBytes(_appSettings.JwtSecret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("id", university.UniversityId.ToString()) }),
+                Expires = DateTime.UtcNow.AddDays(10),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(appPrivateKey), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
         public string GenerateJWTToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
