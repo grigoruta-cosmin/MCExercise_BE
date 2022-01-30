@@ -14,7 +14,7 @@ namespace MCExercise.Models.Relations.One_to_Many
         public string Email { get; set; }
         [JsonIgnore]
         public string PasswordHash { get; set; }
-        public string About { get; set; }
+        public string? About { get; set; }
 
         public ICollection<Category> Categories { get; set; }
     }
