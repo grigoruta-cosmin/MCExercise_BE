@@ -1,6 +1,6 @@
-﻿using MCExercise.Entities.Relations.Many_to_Many;
-using MCExercise.Entities.Relations.One_to_Many;
-using MCExercise.Entities.Relations.One_to_One;
+﻿using MCExercise.Models.Relations.Many_to_Many;
+using MCExercise.Models.Relations.One_to_Many;
+using MCExercise.Models.Relations.One_to_One;
 using Microsoft.EntityFrameworkCore;
 
 namespace MCExercise.Data
@@ -51,7 +51,13 @@ namespace MCExercise.Data
             builder.Entity<Attempt>()
                    .HasOne<Exercise>(attempt => attempt.Exercise)
                    .WithMany(exercise => exercise.Attempts)
-                   .HasForeignKey(attempt => attempt.ExerciseId);
+                   .HasForeignKey(attempt => attempt.ExerciseId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Attempt>()
+                   .HasOne<Answer>(attempt => attempt.Answer)
+                   .WithMany(answer => answer.Attempts)
+                   .HasForeignKey(attempt => attempt.AnswerId);
             base.OnModelCreating(builder);
         }
     }

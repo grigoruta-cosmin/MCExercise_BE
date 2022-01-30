@@ -22,41 +22,44 @@ namespace MCExercise.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.Many_to_Many.Attempt", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.Many_to_Many.Attempt", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AttemptDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("AnswerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
 
                     b.HasKey("UserId", "ExerciseId", "AttemptDateTime");
+
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("ExerciseId");
 
                     b.ToTable("Attempts");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Answer", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Answer", b =>
                 {
-                    b.Property<int>("AnswerId")
+                    b.Property<Guid>("AnswerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnswerId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("bit");
@@ -68,20 +71,18 @@ namespace MCExercise.Migrations
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Category", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UniversityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UniversityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CategoryId");
 
@@ -90,16 +91,14 @@ namespace MCExercise.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Exercise", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Exercise", b =>
                 {
-                    b.Property<int>("ExerciseId")
+                    b.Property<Guid>("ExerciseId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExerciseId"), 1L, 1);
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Statement")
                         .IsRequired()
@@ -116,13 +115,11 @@ namespace MCExercise.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.University", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.University", b =>
                 {
-                    b.Property<int>("UniversityId")
+                    b.Property<Guid>("UniversityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniversityId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("About")
                         .IsRequired()
@@ -144,13 +141,9 @@ namespace MCExercise.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PasswordHash")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -161,20 +154,18 @@ namespace MCExercise.Migrations
                     b.ToTable("Universities");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_One.Photo", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_One.Photo", b =>
                 {
-                    b.Property<int>("PhotoId")
+                    b.Property<Guid>("PhotoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PhotoId");
 
@@ -184,13 +175,11 @@ namespace MCExercise.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_One.User", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_One.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
@@ -211,13 +200,12 @@ namespace MCExercise.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PasswordHash")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -232,28 +220,34 @@ namespace MCExercise.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.Many_to_Many.Attempt", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.Many_to_Many.Attempt", b =>
                 {
-                    b.HasOne("MCExercise.Entities.Relations.One_to_Many.Exercise", "Exercise")
+                    b.HasOne("MCExercise.Models.Relations.One_to_Many.Answer", "Answer")
+                        .WithMany("Attempts")
+                        .HasForeignKey("AnswerId");
+
+                    b.HasOne("MCExercise.Models.Relations.One_to_Many.Exercise", "Exercise")
                         .WithMany("Attempts")
                         .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("MCExercise.Entities.Relations.One_to_One.User", "User")
+                    b.HasOne("MCExercise.Models.Relations.One_to_One.User", "User")
                         .WithMany("Attempts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Answer");
 
                     b.Navigation("Exercise");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Answer", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Answer", b =>
                 {
-                    b.HasOne("MCExercise.Entities.Relations.One_to_Many.Exercise", "Exercise")
+                    b.HasOne("MCExercise.Models.Relations.One_to_Many.Exercise", "Exercise")
                         .WithMany("Answers")
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -262,9 +256,9 @@ namespace MCExercise.Migrations
                     b.Navigation("Exercise");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Category", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Category", b =>
                 {
-                    b.HasOne("MCExercise.Entities.Relations.One_to_Many.University", "University")
+                    b.HasOne("MCExercise.Models.Relations.One_to_Many.University", "University")
                         .WithMany("Categories")
                         .HasForeignKey("UniversityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -273,9 +267,9 @@ namespace MCExercise.Migrations
                     b.Navigation("University");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Exercise", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Exercise", b =>
                 {
-                    b.HasOne("MCExercise.Entities.Relations.One_to_Many.Category", "Category")
+                    b.HasOne("MCExercise.Models.Relations.One_to_Many.Category", "Category")
                         .WithMany("Exercises")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -284,35 +278,40 @@ namespace MCExercise.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_One.Photo", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_One.Photo", b =>
                 {
-                    b.HasOne("MCExercise.Entities.Relations.One_to_One.User", "User")
+                    b.HasOne("MCExercise.Models.Relations.One_to_One.User", "User")
                         .WithOne("Photo")
-                        .HasForeignKey("MCExercise.Entities.Relations.One_to_One.Photo", "UserId")
+                        .HasForeignKey("MCExercise.Models.Relations.One_to_One.Photo", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Category", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Answer", b =>
+                {
+                    b.Navigation("Attempts");
+                });
+
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Category", b =>
                 {
                     b.Navigation("Exercises");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.Exercise", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.Exercise", b =>
                 {
                     b.Navigation("Answers");
 
                     b.Navigation("Attempts");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_Many.University", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_Many.University", b =>
                 {
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("MCExercise.Entities.Relations.One_to_One.User", b =>
+            modelBuilder.Entity("MCExercise.Models.Relations.One_to_One.User", b =>
                 {
                     b.Navigation("Attempts");
 
