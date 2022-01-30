@@ -8,6 +8,6 @@ namespace MCExercise.Services.UserService
     {
         Task<UserResponseDTO> Register(RegisterDTO registerDTO);
         Task<UserResponseDTO> Authenticate(UserRequestDTO userRequest);
-        Task<User> GetUserById(Guid id);
+        Task<User> GetById(Guid id);
     }
 }

@@ -38,7 +38,7 @@ namespace MCExercise.Services.UserService
                 Email = registerDTO.Email,
                 Country = registerDTO.Country,
                 Type = registerDTO.Type,
-                Role = (Role)registerDTO.Role
+                Role = Role.User
             };
             await _userRepository.CreateAsync(user);
             var jwtToken = _iJWTUtils.GenerateJWTToken(user);
@@ -55,7 +55,7 @@ namespace MCExercise.Services.UserService
             return new UserResponseDTO(user, jwtToken);
         } 
 
-        public async Task<User> GetUserById(Guid id)
+        public async Task<User> GetById(Guid id)
         {
             return await _userRepository.FindByIdAsync(id);
         }
