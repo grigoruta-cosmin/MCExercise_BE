@@ -31,7 +31,6 @@ namespace MCExercise.Controllers
             return Ok(response);
         }
 
-        // [Authorization(Role.User, Role.Admin)]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(UserRequestDTO userRequest)
         {
@@ -41,6 +40,26 @@ namespace MCExercise.Controllers
                 return BadRequest(new { Message = "Username or Password is invalid!" });
             }
             return Ok(response);
+        }
+
+        [Authorization(Role.User, Role.Admin)]
+        [HttpPut("update")]
+        public async Task<IActionResult> Update(UserUpdateDTO userUpdateDTO)
+        {
+            var result = await _userService.Update(userUpdateDTO);
+            if (!result)
+            {
+                return BadRequest(new { Message = "Update couldn't be done!" });
+            }
+            return Ok(result);
+        }
+
+        [Authorization(Role.Admin, Role.User)]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var user = await _userService.GetById(id);
+            return Ok(user);
         }
 
         [Authorization(Role.Admin)]

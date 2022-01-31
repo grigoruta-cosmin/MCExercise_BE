@@ -59,5 +59,27 @@ namespace MCExercise.Services.UserService
         {
             return await _userRepository.FindByIdAsync(id);
         }
+
+        public async Task<bool> Update(UserUpdateDTO userUpdateDTO)
+        {
+            var user = await _userRepository.FindByIdAsync(userUpdateDTO.UserId);
+            if (user == null)
+                return false;
+            if (userUpdateDTO.NewPassword != null)
+            {
+                user.PasswordHash = BCryptNet.HashPassword(userUpdateDTO.NewPassword);
+            }
+            user.UserId = userUpdateDTO.UserId;
+            user.UserName = userUpdateDTO.Username;
+            user.FirstName = userUpdateDTO.FirstName;
+            user.LastName = userUpdateDTO.LastName;
+            user.Email = userUpdateDTO.Email;
+            user.Country = userUpdateDTO.Country;
+            user.Bio = userUpdateDTO.Bio;
+            user.Type = userUpdateDTO.Type;
+            _userRepository.Update(user);
+            var result =  _userRepository.Save();
+            return result;
+        }
     }
 }

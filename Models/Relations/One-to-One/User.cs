@@ -19,7 +19,6 @@ namespace MCExercise.Models.Relations.One_to_One
         public string Type { get; set; }
         public Photo Photo { get; set; }
         public Role Role { get; set; }
-
         public ICollection<Attempt> Attempts { get; set; }
     }
 }
