@@ -57,5 +57,33 @@ namespace MCExercise.Services.UniversityService
         {
             return await _universityRepository.FindByIdAsync(id);
         }
+
+        public async Task<bool> Update(UniversityUpdateDTO universityUpdateDTO)
+        {
+            var university = await _universityRepository.FindByIdAsync(universityUpdateDTO.UniversityId);
+            if (university == null)
+                return false;
+            if (universityUpdateDTO.NewPassword != null)
+            {
+                university.PasswordHash = BCryptNet.HashPassword(universityUpdateDTO.NewPassword);
+            }
+            university.Name = universityUpdateDTO.Name;
+            university.City = universityUpdateDTO.City;
+            university.Country = universityUpdateDTO.Country;
+            university.Type = universityUpdateDTO.Type;
+            university.Email = universityUpdateDTO.Email;
+            university.About = universityUpdateDTO.About;
+            _universityRepository.Update(university);
+            var response = await _universityRepository.SaveAsync();
+            return response;
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var university = await _universityRepository.FindByIdAsync(id);
+            _universityRepository.Delete(university);
+            var response = await _universityRepository.SaveAsync();
+            return response;
+        }
     }
 }

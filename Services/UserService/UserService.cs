@@ -81,5 +81,13 @@ namespace MCExercise.Services.UserService
             var result =  _userRepository.Save();
             return result;
         }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var user = await _userRepository.FindByIdAsync(id);
+            _userRepository.Delete(user);
+            var result = await _userRepository.SaveAsync();
+            return result;
+        }
     }
 }

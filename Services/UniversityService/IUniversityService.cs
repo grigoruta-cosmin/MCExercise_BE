@@ -9,5 +9,7 @@ namespace MCExercise.Services.UniversityService
         Task<UniversityResponseDTO> Register(UniversityRegisterDTO universityRegisterDTO);
         Task<UniversityResponseDTO> Authenticate(UniversityRequestDTO universityRequestDTO);
         Task<University> GetById(Guid Id);
+        Task<bool> Update(UniversityUpdateDTO universityUpdateDTO);
+        Task<bool> DeleteById(Guid Id);
     }
 }

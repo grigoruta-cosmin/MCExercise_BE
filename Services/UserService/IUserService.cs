@@ -10,5 +10,6 @@ namespace MCExercise.Services.UserService
         Task<UserResponseDTO> Authenticate(UserRequestDTO userRequest);
         Task<User> GetById(Guid id);
         Task<bool> Update(UserUpdateDTO userUpdateDTO);
+        Task<bool> Delete(Guid id);
     }
 }

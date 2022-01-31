@@ -69,5 +69,13 @@ namespace MCExercise.Controllers
             var users = await _userService.GetAll();
             return Ok(users);
         }
+
+        [Authorization(Role.Admin, Role.User)]
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _userService.Delete(id);
+            return Ok(result);
+        }
     }
 }

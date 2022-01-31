@@ -36,5 +36,45 @@ namespace MCExercise.Controllers
             }
             return Ok(response);
         }
+        
+        [HttpPut("update")]
+        public async Task<IActionResult> Update(UniversityUpdateDTO universityUpdateDTO)
+        {
+            var resposne = await _universityService.Update(universityUpdateDTO);
+            if (!resposne)
+            {
+                return BadRequest(new { Message = "Update couldn't be done!" });
+            }
+            return Ok(resposne);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var response = await _universityService.DeleteById(id);
+            if (!response)
+            {
+                return BadRequest(new { Message = "Delete couldn't be done!" });
+            }
+            return Ok(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var response = _universityService.GetAll();
+            return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var response = await _universityService.GetById(id);
+            if (response == null)
+            {
+                return BadRequest(new { Message = "University not found!"});
+            }
+            return Ok(response);
+        }
     }
 }
