@@ -1,4 +1,5 @@
-﻿namespace MCExercise.Models.DTOs
+﻿
+namespace MCExercise.Models.DTOs
 {
     public class UniversityUpdateDTO
     {
@@ -8,7 +9,7 @@
         public string Country { get; set; }
         public string Type { get; set; }
         public string Email { get; set; }
-        public string NewPassword { get; set; }
-        public string About { get; set; }
+        public string? NewPassword { get; set; }
+        public string? About { get; set; }
     }
 }

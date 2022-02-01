@@ -19,7 +19,7 @@ namespace MCExercise.Utilities
         public async Task Invoke(HttpContext httpContext, IUserService userService, IUniversityService universityService, IJWTUtils jwtUtils) 
         {
             var token = httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var path = httpContext.Request.Path.ToString().Split("/")[1];
+            var path = httpContext.Request.Path.ToString().Split("/")[2];
             var id = jwtUtils.ValidateJWTToken(token);
             if ( path == "universities" && id != Guid.Empty)
             {

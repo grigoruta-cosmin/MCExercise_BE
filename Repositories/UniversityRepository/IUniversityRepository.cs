@@ -6,5 +6,7 @@ namespace MCExercise.Repositories.UniversityRepository
     public interface IUniversityRepository : IGenericRepository<University>
     {
         Task<University> GetByEmail(string email);
+
+        Task<object> GetCategoriesCountsById(Guid Id);
     }
 }

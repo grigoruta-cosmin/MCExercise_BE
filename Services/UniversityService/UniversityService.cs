@@ -1,4 +1,5 @@
 ﻿using MCExercise.Models.DTOs;
+using MCExercise.Models.DTOs;
 using MCExercise.Models.Relations.One_to_Many;
 using MCExercise.Repositories.UniversityRepository;
 using MCExercise.Services.GenericService;
@@ -47,7 +48,7 @@ namespace MCExercise.Services.UniversityService
         public async Task<UniversityResponseDTO> Authenticate(UniversityRequestDTO universityRequestDTO)
         {
             var university = await _universityRepository.GetByEmail(universityRequestDTO.Email);
-            if (university == null | !BCryptNet.Verify(universityRequestDTO.Password, university.PasswordHash))
+            if (university == null || !BCryptNet.Verify(universityRequestDTO.Password, university.PasswordHash))
                 return null;
             var jwtToken = _iJWTUtils.GenerateJWTToken(university);
             return new UniversityResponseDTO(university, jwtToken);
@@ -78,12 +79,23 @@ namespace MCExercise.Services.UniversityService
             return response;
         }
 
-        public async Task<bool> Delete(Guid id)
+        public async Task<bool> DeleteById(Guid Id)
         {
-            var university = await _universityRepository.FindByIdAsync(id);
+            var university = await _universityRepository.FindByIdAsync(Id);
             _universityRepository.Delete(university);
             var response = await _universityRepository.SaveAsync();
             return response;
+        }
+
+        public async Task<UniversityCategorySummarizationDTO> GetSummarization(Guid Id)
+        {
+            dynamic result = await _universityRepository.GetCategoriesCountsById(Id);
+            return new UniversityCategorySummarizationDTO(
+                    result.CategoryCount,
+                    result.Email,
+                    result.Name,
+                    result.UniversityId
+                );
         }
     }
 }

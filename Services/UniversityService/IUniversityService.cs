@@ -1,4 +1,5 @@
 ﻿using MCExercise.Models.DTOs;
+using MCExercise.Models.DTOs;
 using MCExercise.Models.Relations.One_to_Many;
 using MCExercise.Services.GenericService;
 
@@ -11,5 +12,6 @@ namespace MCExercise.Services.UniversityService
         Task<University> GetById(Guid Id);
         Task<bool> Update(UniversityUpdateDTO universityUpdateDTO);
         Task<bool> DeleteById(Guid Id);
+        Task<UniversityCategorySummarizationDTO> GetSummarization(Guid Id);
     }
 }

@@ -1,7 +1,9 @@
 using MCExercise.Data;
+using MCExercise.Repositories.CategoryRepository;
 using MCExercise.Repositories.UniversityRepository;
 using MCExercise.Repositories.UserRepository;
 using MCExercise.Services;
+using MCExercise.Services.CategoryService;
 using MCExercise.Services.UniversityService;
 using MCExercise.Services.UserService;
 using MCExercise.Utilities;
@@ -25,6 +27,8 @@ builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,7 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().WithOrigins("http://localhost:4200"));
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().WithOrigins("http://localhost:4200"));
 app.UseMiddleware<JWTMiddleware>();
 app.UseAuthorization();
 

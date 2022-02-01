@@ -76,5 +76,16 @@ namespace MCExercise.Controllers
             }
             return Ok(response);
         }
+
+        [HttpGet("summ/{id}")]
+        public async Task<IActionResult> GetSummarizationById(Guid id)
+        {
+            var response = await _universityService.GetSummarization(id);
+            if (response == null)
+            {
+                return BadRequest(new { Message = "Can't get summarization" });
+            }
+            return Ok(response);
+        }
     }
 }
