@@ -22,6 +22,22 @@ namespace MCExercise.Services.UserService
             _appSettings = appSettings.Value;
         }
 
+        public async Task<UserUpdateDTO> GetByIdWithPhoto(Guid id)
+        {
+            var user = await _userRepository.FindIncludePhoto(id);
+            return new UserUpdateDTO
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Username = user.UserName,
+                Email = user.Email,
+                Country = user.Country,
+                Type = user.Type,
+                PhotoUrl = user.Photo?.Url
+            };
+        }
+
         public async Task<UserResponseDTO> Register(RegisterDTO registerDTO)
         {
             var test = await _userRepository.GetByUsername(registerDTO.Username);

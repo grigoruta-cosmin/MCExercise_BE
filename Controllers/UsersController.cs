@@ -56,9 +56,9 @@ namespace MCExercise.Controllers
 
         [Authorization(Role.Admin, Role.User)]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetByIdWithPhoto(Guid id)
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetByIdWithPhoto(id);
             return Ok(user);
         }
 

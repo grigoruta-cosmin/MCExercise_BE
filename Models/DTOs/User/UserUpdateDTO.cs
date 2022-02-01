@@ -1,4 +1,6 @@
-﻿namespace MCExercise.Models.DTOs
+﻿using MCExercise.Models.Relations.One_to_One;
+
+namespace MCExercise.Models.DTOs
 {
     public class UserUpdateDTO
     {
@@ -9,7 +11,8 @@
         public string? NewPassword { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
-        public string Bio { get; set; }
+        public string? Bio { get; set; }
         public string Type { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }

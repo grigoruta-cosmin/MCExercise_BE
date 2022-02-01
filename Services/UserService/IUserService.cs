@@ -11,5 +11,6 @@ namespace MCExercise.Services.UserService
         Task<User> GetById(Guid id);
         Task<bool> Update(UserUpdateDTO userUpdateDTO);
         Task<bool> Delete(Guid id);
+        Task<UserUpdateDTO> GetByIdWithPhoto(Guid id);
     }
 }

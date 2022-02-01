@@ -6,5 +6,6 @@ namespace MCExercise.Repositories.UserRepository
     public interface IUserRepository : IGenericRepository<User>
     {
         Task<User> GetByUsername(string username);
+        Task<User> FindIncludePhoto(Guid Id);
     }
 }

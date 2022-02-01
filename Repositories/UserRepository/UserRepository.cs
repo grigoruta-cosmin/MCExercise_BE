@@ -11,6 +11,11 @@ namespace MCExercise.Repositories.UserRepository
         {
         }
 
+        public async Task<User> FindIncludePhoto(Guid Id)
+        {
+            return await _table.Include(user => user.Photo).Where(user => user.UserId.Equals(Id)).FirstOrDefaultAsync();
+        }
+
         public async Task<User> GetByUsername(string username)
         {
             return await _table.Where(user => user.UserName.Equals(username)).FirstOrDefaultAsync();
